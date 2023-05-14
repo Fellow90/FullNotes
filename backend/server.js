@@ -11,13 +11,24 @@ app.get('/api/notes', (req, res) => {
   res.json(notes);
 });
 
+// // Create a new note
+// app.post('/api/notes', (req, res) => {
+//   const { content } = req.body;
+//   const newNote = { id: Date.now().toString(), content };
+//   notes.push(newNote);
+//   res.status(201).json(newNote);
+// });
+
 // Create a new note
 app.post('/api/notes', (req, res) => {
-  const { content } = req.body;
-  const newNote = { id: Date.now().toString(), content };
-  notes.push(newNote);
-  res.status(201).json(newNote);
-});
+    const { content } = req.body;
+    if (!content) {
+      return res.status(400).json({ error: 'Content is required' });
+    }
+    const newNote = { id: Date.now().toString(), content };
+    notes.push(newNote);
+    res.status(201).json(newNote);
+  });
 
 // Delete a note
 app.delete('/api/notes/:id', (req, res) => {
